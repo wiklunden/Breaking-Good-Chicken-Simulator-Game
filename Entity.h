@@ -18,8 +18,6 @@ public:
 	void move(float, float);
 	SDL_Texture* getTexture();
 	SDL_Rect getCurrentFrame();
-	bool offScreen();
-	void setScaler(float);
 	float getScaler() const;
 	bool toLeftOf(Entity&);
 	bool toRightOf(Entity&);

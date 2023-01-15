@@ -51,25 +51,6 @@ SDL_Rect Entity::getCurrentFrame() {
 	return currentFrame;
 }
 
-bool Entity::offScreen() {
-	bool isOffScreen = false;
-
-	if (getX() >= 301) {
-		isOffScreen = true;
-		setPos(-47, getY());
-	}
-	if (getX() <= -48) {
-		isOffScreen = true;
-		setPos(300, getY());
-	}
-
-	return isOffScreen;
-}
-
-void Entity::setScaler(float p_scaler) {
-	scaler = p_scaler;
-}
-
 float Entity::getScaler() const {
 	return scaler;
 }

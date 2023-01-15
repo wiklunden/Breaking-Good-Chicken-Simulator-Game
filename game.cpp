@@ -15,14 +15,15 @@
 
 SDL_Event event;
 
-bool pressedKey(SDL_Keycode btn) {
+// Reads key input from user.
+bool pressedKey(const SDL_Keycode button) {
 	bool isPressed = false;
 
 	if (event.type != SDL_KEYDOWN) {
 		isPressed = false;
 	}
 	else {
-		if (event.key.keysym.sym == btn) {
+		if (event.key.keysym.sym == button) {
 			isPressed = true;
 		}
 	}
@@ -197,7 +198,7 @@ int main(int argc, char* args[]) {
 			entitiesToMove.move();
 		}
 
-		// MovemoveEnt for player two.
+		// Movement for player two.
 		if (keystates[SDL_SCANCODE_UP]) {
 			playerTwo.setTexture(TextureLibrary::playerTwo[0]);
 
@@ -254,11 +255,11 @@ int main(int argc, char* args[]) {
 				: borrowPopUp.setTexture("resources/textures/borrow.png");
 
 			if (clicks != MIN_CLICKS) {
-				if (playerOne.getX() < playerTwo.getX()) {
+				if (playerOne.toLeftOf(playerTwo)) {
 					playerOne.setTexture(TextureLibrary::playerOne[3]);
 					playerTwo.setTexture(TextureLibrary::playerTwo[1]);
 				}
-				else if (playerOne.getX() > playerTwo.getX()) {
+				else if (playerOne.toRightOf(playerTwo)) {
 					playerOne.setTexture(TextureLibrary::playerOne[1]);
 					playerTwo.setTexture(TextureLibrary::playerTwo[3]);
 				}
@@ -284,8 +285,6 @@ int main(int argc, char* args[]) {
 		for (auto& w : wingCounter) {
 			window.render(w);
 		}
-
-		/*window.render(quitText);*/
 
 		// Displays all entities.
 		window.display();
