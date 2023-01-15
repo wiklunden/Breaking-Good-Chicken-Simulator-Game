@@ -13,11 +13,22 @@
 #include "TextureLibrary.h"
 #include "RenderEntities.h"
 
-/*
-	Draw a nicer sky.
-	Set chicken limit to 30.
-	Make place where player can eat chicken.
-*/
+SDL_Event event;
+
+bool pressedKey(SDL_Keycode btn) {
+	bool isPressed = false;
+
+	if (event.type != SDL_KEYDOWN) {
+		isPressed = false;
+	}
+	else {
+		if (event.key.keysym.sym == btn) {
+			isPressed = true;
+		}
+	}
+
+	return isPressed;
+}
 
 int main(int argc, char* args[]) {
 	// SDL initializations.
@@ -62,13 +73,11 @@ int main(int argc, char* args[]) {
 	Entity balance(Position(2, 2), TextureLibrary::balance[0], 64, 36, 4);
 	Entity quitText(Position(0, 334), "resources/textures/esc.png", 104, 32, 2);
 	Entity cppIcon(Position(-10, 14), "resources/textures/cpp.png", 150, 50, 6);
-	Entity eatHereMark(Position(70, 110), "resources/textures/eat_here_sign.png", 40, 40);
 
 	// Vectors for storing different kinds of player entities.
 	std::vector<Entity*> players{ &playerOne, &playerTwo };
 	std::vector<Entity*> playerTwoEntities{ &playerTwo, &dialogueBox };
 
-	SDL_Event event;
 	bool gameIsRunning = true, playerIsByDoor = false;
 	float playerDistanceX = 0, playerDistanceY = 0;
 	int clicks = 0;
@@ -91,7 +100,7 @@ int main(int argc, char* args[]) {
 
 		// Checks key events.
 		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
+			if (pressedKey(SDLK_ESCAPE)) {
 				gameIsRunning = false;
 				break;
 			}
@@ -100,7 +109,7 @@ int main(int argc, char* args[]) {
 			if (playerDistanceX <= PLAYER_DISTANCE && playerDistanceY <= PLAYER_DISTANCE) {
 				window.render(borrowPopUp);
 				if (clicks > MIN_CLICKS) {
-					if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_e) {
+					if (pressedKey(SDLK_e)) {
 						clicks--;
 						balance.setTexture(TextureLibrary::balance[clicks]);
 					}
@@ -117,48 +126,26 @@ int main(int argc, char* args[]) {
 					: chickenPopUp.setTexture("resources/textures/chicken.png");
 
 				if (clicks < MAX_CLICKS) {
-					if (event.type == SDL_KEYDOWN) {
-						if (event.key.keysym.sym == SDLK_e) {
-							// Organises so there is only 10 pieces of chicken wings per row.
-							if (wing.getX() <= wingOrigin.x - (32 * 9)) {
-								wingPosition.x = wingOrigin.x + 32;
-								wingPosition.y += 32;
-							}
-
-							// Stores chicken wing entity in vector and moves next to the left.
-							wingCounter.push_back(wing);
-							wingPosition.x -= 32;
-							wing.setPos(wingPosition.x, wingPosition.y);
-
-							clicks++;
-							balance.setTexture(TextureLibrary::balance[clicks]);
+					if (pressedKey(SDLK_e)) {
+						// Organises so there is only 10 pieces of chicken wings per row.
+						if (wing.getX() <= wingOrigin.x - (32 * 9)) {
+							wingPosition.x = wingOrigin.x + 32;
+							wingPosition.y += 32;
 						}
+
+						// Stores chicken wing entity in vector and moves next to the left.
+						wingCounter.push_back(wing);
+						wingPosition.x -= 32;
+						wing.setPos(wingPosition.x, wingPosition.y);
+
+						clicks++;
+						balance.setTexture(TextureLibrary::balance[clicks]);
 					}
 				}
 			}
 			else {
 				playerIsByDoor = false;
 			}
-		}
-
-		// Lets playerOne eat his chicken wings.
-		if (building.getX() >= 200 && building.getX() <= 240
-			&& playerOne.getY() <= 90
-			&& !wingCounter.empty()) {
-			playerOne.setTexture(TextureLibrary::playerOne[4]);
-
-			/*while (SDL_PollEvent(&event)) {
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_e) {
-					wingCounter.pop_back();
-
-					wingPosition = (*(wingCounter.end() - 1)).getPos();
-
-					if (wingCounter.empty()) {
-						wingPosition = wingOrigin;
-						(*wingCounter.begin()).setPos(wingOrigin.x, wingOrigin.y);
-					}
-				}
-			}*/
 		}
 
 		// Container class responsible for manipulating the position of all added entities.
@@ -179,7 +166,6 @@ int main(int argc, char* args[]) {
 			// Stores all entities which are to be moved.
 			entitiesToMove.add(&cppIcon, (moveSpeed / 4), 0.0f);
 			entitiesToMove.add(&building, (moveSpeed / 2), 0.0f);
-			entitiesToMove.add(&eatHereMark, (moveSpeed / 2), 0.0f);
 			entitiesToMove.add(floor.getFirstLevel(), moveSpeed, 0.0f);
 			entitiesToMove.add(floor.getSecondLevel(), moveSpeed, 0.0f);
 			entitiesToMove.add(playerTwoEntities, moveSpeed, 0.0f);
@@ -202,7 +188,6 @@ int main(int argc, char* args[]) {
 			// Stores all entities which are to be moved.
 			entitiesToMove.add(&cppIcon, -(moveSpeed / 4), 0.0f);
 			entitiesToMove.add(&building, -(moveSpeed / 2), 0.0f);
-			entitiesToMove.add(&eatHereMark, -(moveSpeed / 2), 0.0f);
 			entitiesToMove.add(floor.getFirstLevel(), -moveSpeed, 0.0f);
 			entitiesToMove.add(floor.getSecondLevel(), -moveSpeed, 0.0f);
 			entitiesToMove.add(playerTwoEntities, -moveSpeed, 0.0f);
@@ -250,10 +235,6 @@ int main(int argc, char* args[]) {
 		RenderEntities::add(floor.getFirstLevel());
 		RenderEntities::add(floor.getSecondLevel());
 		RenderEntities::add(&quitText);
-
-		if (clicks != MIN_CLICKS) {
-			RenderEntities::add(&eatHereMark);
-		}
 
 		// Renders background components that are less dynamic.
 		window.render(RenderEntities::get());
