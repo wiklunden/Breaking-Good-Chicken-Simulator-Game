@@ -95,6 +95,8 @@ int main(int argc, char* args[]) {
 	const int MIN_Y = 70, MAX_Y = 150;
 	const int MIN_CLICKS = 0, MAX_CLICKS = 5;
 
+	// Creates chicken wing entities which are used for
+	// counting amount of wings bought at Los Food.
 	std::vector<Entity> wingCounter;
 	Position wingOrigin(600, 0);
 	Position wingPosition = wingOrigin;
@@ -152,9 +154,7 @@ int main(int argc, char* args[]) {
 					}
 				}
 			}
-			else {
-				playerIsByDoor = false;
-			}
+			else { playerIsByDoor = false; }
 		}
 
 		// Container class responsible for manipulating the position of all added entities.

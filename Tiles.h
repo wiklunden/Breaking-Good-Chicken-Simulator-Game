@@ -13,7 +13,7 @@ public:
 	std::deque<Entity>& getSecondLevel();
 
 private:
-	void checkBounds(std::deque<Entity>&);
+	void autogenerate(std::deque<Entity>&);
 	const char* texturePath;
 	SDL_Texture* texture;
 	std::deque<Entity> firstLevel, secondLevel;
