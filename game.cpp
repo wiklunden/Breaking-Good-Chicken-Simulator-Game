@@ -10,7 +10,6 @@
 #include "Math.h"
 #include "Tiles.h"
 #include "MoveEntities.h"
-#include "TextureLibrary.h"
 #include "RenderEntities.h"
 
 SDL_Event event;
@@ -63,15 +62,24 @@ int main(int argc, char* args[]) {
 	const int SCREEN_CENTER_X = 126;
 	const int SCREEN_CENTER_Y = 70;
 
+	const char* balanceTextures[6]{
+		"resources/textures/balance/10.png",
+		"resources/textures/balance/8.png",
+		"resources/textures/balance/6.png",
+		"resources/textures/balance/4.png",
+		"resources/textures/balance/2.png",
+		"resources/textures/balance/0.png"
+	};
+
 	// Entity objects with a position, texture, dimensions and, if specificed, a scaler.
-	Entity playerOne(Position(SCREEN_CENTER_X, SCREEN_CENTER_Y), TextureLibrary::playerOne[2], 64, 64);
-	Entity playerTwo(Position(playerOne.getX() - 40, playerOne.getY() + 10), TextureLibrary::playerTwo[2], 64, 64);
+	Entity playerOne(Position(SCREEN_CENTER_X, SCREEN_CENTER_Y), "resources/textures/gus_front.png", 64, 64);
+	Entity playerTwo(Position(playerOne.getX() - 40, playerOne.getY() + 10), "resources/textures/walt_front.png", 64, 64);
 	Entity dialogueBox(Position(playerTwo.getX() + 24, playerTwo.getY() - 40), "resources/textures/dialogue.png", 67, 36);
 	Entity chickenPopUp(Position(SCREEN_CENTER_X, SCREEN_CENTER_Y + 60), "resources/textures/chicken.png", 64, 36);
 	Entity borrowPopUp(Position(SCREEN_CENTER_X - 22, SCREEN_CENTER_Y + 60), "resources/textures/borrow.png", 104, 32);
 	Entity building(Position(150, 16), "resources/textures/los_food.png", 128, 72, 6);
 	Entity background(Position(-50, 0), "resources/textures/bg_new.png", 752, 288, 2);
-	Entity balance(Position(2, 2), TextureLibrary::balance[0], 64, 36, 4);
+	Entity balance(Position(2, 2), balanceTextures[0], 64, 36, 4);
 	Entity quitText(Position(0, 334), "resources/textures/esc.png", 104, 32, 2);
 	Entity cppIcon(Position(-10, 14), "resources/textures/cpp.png", 150, 50, 6);
 
@@ -112,7 +120,7 @@ int main(int argc, char* args[]) {
 				if (clicks > MIN_CLICKS) {
 					if (pressedKey(SDLK_e)) {
 						clicks--;
-						balance.setTexture(TextureLibrary::balance[clicks]);
+						balance.setTexture(balanceTextures[clicks]);
 					}
 				}
 			}
@@ -140,7 +148,7 @@ int main(int argc, char* args[]) {
 						wing.setPos(wingPosition.x, wingPosition.y);
 
 						clicks++;
-						balance.setTexture(TextureLibrary::balance[clicks]);
+						balance.setTexture(balanceTextures[clicks]);
 					}
 				}
 			}
@@ -154,7 +162,7 @@ int main(int argc, char* args[]) {
 
 		//Movement for player one.
 		if (keystates[SDL_SCANCODE_W]) {
-			playerOne.setTexture(TextureLibrary::playerOne[0]);
+			playerOne.setTexture("resources/textures/gus_back.png");
 
 			// Move playerOne.
 			(playerOne.getY() == MIN_Y)
@@ -162,7 +170,7 @@ int main(int argc, char* args[]) {
 				: playerOne.move(0.0f, -moveSpeed);
 		}
 		if (keystates[SDL_SCANCODE_A]) {
-			playerOne.setTexture(TextureLibrary::playerOne[1]);
+			playerOne.setTexture("resources/textures/gus_left.png");
 
 			// Stores all entities which are to be moved.
 			entitiesToMove.add(&cppIcon, (moveSpeed / 4), 0.0f);
@@ -176,7 +184,7 @@ int main(int argc, char* args[]) {
 			entitiesToMove.move();
 		}
 		if (keystates[SDL_SCANCODE_S]) {
-			playerOne.setTexture(TextureLibrary::playerOne[2]);
+			playerOne.setTexture("resources/textures/gus_front.png");
 
 			// Move playerOne.
 			(playerOne.getY() == MAX_Y)
@@ -184,7 +192,7 @@ int main(int argc, char* args[]) {
 				: playerOne.move(0.0f, moveSpeed);
 		}
 		if (keystates[SDL_SCANCODE_D]) {
-			playerOne.setTexture(TextureLibrary::playerOne[3]);
+			playerOne.setTexture("resources/textures/gus_right.png");
 
 			// Stores all entities which are to be moved.
 			entitiesToMove.add(&cppIcon, -(moveSpeed / 4), 0.0f);
@@ -200,7 +208,7 @@ int main(int argc, char* args[]) {
 
 		// Movement for player two.
 		if (keystates[SDL_SCANCODE_UP]) {
-			playerTwo.setTexture(TextureLibrary::playerTwo[0]);
+			playerTwo.setTexture("resources/textures/walt_back.png");
 
 			// Move playerTwo.
 			(playerTwo.getY() == MIN_Y)
@@ -208,13 +216,13 @@ int main(int argc, char* args[]) {
 				: entitiesToMove.move(playerTwoEntities, 0.0f, -moveSpeed);
 		}
 		if (keystates[SDL_SCANCODE_LEFT]) {
-			playerTwo.setTexture(TextureLibrary::playerTwo[1]);
+			playerTwo.setTexture("resources/textures/walt_left.png");
 
 			// Move playerTwo.
 			entitiesToMove.move(playerTwoEntities, -moveSpeed, 0.0f);
 		}
 		if (keystates[SDL_SCANCODE_DOWN]) {
-			playerTwo.setTexture(TextureLibrary::playerTwo[2]);
+			playerTwo.setTexture("resources/textures/walt_front.png");
 
 			// Move playerTwo.
 			(playerTwo.getY() == MAX_Y)
@@ -222,7 +230,7 @@ int main(int argc, char* args[]) {
 				: entitiesToMove.move(playerTwoEntities, 0.0f, moveSpeed);
 		}
 		if (keystates[SDL_SCANCODE_RIGHT]) {
-			playerTwo.setTexture(TextureLibrary::playerTwo[3]);
+			playerTwo.setTexture("resources/textures/walt_right.png");
 
 			// Move playerTwo.
 			entitiesToMove.move(playerTwoEntities, moveSpeed, 0.0f);
@@ -256,26 +264,26 @@ int main(int argc, char* args[]) {
 
 			if (clicks != MIN_CLICKS) {
 				if (playerOne.toLeftOf(playerTwo)) {
-					playerOne.setTexture(TextureLibrary::playerOne[3]);
-					playerTwo.setTexture(TextureLibrary::playerTwo[1]);
+					playerOne.setTexture("resources/textures/gus_right.png");
+					playerTwo.setTexture("resources/textures/walt_left.png");
 				}
 				else if (playerOne.toRightOf(playerTwo)) {
-					playerOne.setTexture(TextureLibrary::playerOne[1]);
-					playerTwo.setTexture(TextureLibrary::playerTwo[3]);
+					playerOne.setTexture("resources/textures/gus_left.png");
+					playerTwo.setTexture("resources/textures/walt_right.png");
 				}
 
 				window.render(dialogueBox);
 			}
 			else {
-				playerOne.setTexture(TextureLibrary::playerOne[2]);
-				playerTwo.setTexture(TextureLibrary::playerTwo[2]);
+				playerOne.setTexture("resources/textures/gus_front.png");
+				playerTwo.setTexture("resources/textures/walt_front.png");
 			}
 
 			window.render(borrowPopUp);
 		}
 		else {
-			playerOne.setTexture(TextureLibrary::playerOne[2]);
-			playerTwo.setTexture(TextureLibrary::playerTwo[2]);
+			playerOne.setTexture("resources/textures/gus_front.png");
+			playerTwo.setTexture("resources/textures/walt_front.png");
 		}
 
 		if (playerIsByDoor) {

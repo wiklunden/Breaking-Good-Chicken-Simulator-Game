@@ -138,8 +138,6 @@
     <ClCompile Include="MoveEntities.cpp" />
     <ClCompile Include="RenderEntities.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
-    <ClCompile Include="SpriteComponent.cpp" />
-    <ClCompile Include="TextureLibrary.cpp" />
     <ClCompile Include="Tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,8 +146,6 @@
     <ClInclude Include="MoveEntities.h" />
     <ClInclude Include="RenderEntities.h" />
     <ClInclude Include="RenderWindow.h" />
-    <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="TextureLibrary.h" />
     <ClInclude Include="Tiles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
