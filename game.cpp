@@ -101,6 +101,10 @@ void Game::handleEvents() {
 				break;
 			}
 
+			if (pressedKey(SDLK_p)) {
+				pause();
+			}
+
 			// Lets playerOne borrow money from playerTwo.
 			if (playersAreClose()) {
 				window.render(borrowPopUp);
@@ -123,6 +127,23 @@ void Game::handleEvents() {
 
 		update();
 
+		window.display();
+	}
+}
+
+void Game::pause() {
+	Entity pauseScreen(Position(0, 0), "resources/gfx/pause.png", WINDOW_WIDTH, WINDOW_HEIGHT, 1);
+	
+	bool pauseGame = true;
+	while (pauseGame) {
+		while (SDL_PollEvent(&event)) {
+			if (pressedKey(SDLK_p)) {
+				SDL_DestroyTexture(pauseScreen.getTexture());
+				pauseGame = false;
+				break;
+			}
+		}
+		window.render(pauseScreen);
 		window.display();
 	}
 }

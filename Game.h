@@ -34,6 +34,7 @@ public:
 	void run();
 private:
 	void stop();
+	void pause();
 	void handleEvents();
 	void update();
 	void initiateEntities();
