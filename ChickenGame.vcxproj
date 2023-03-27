@@ -74,6 +74,10 @@
     <LibraryPath>D:\Users\Milton\Downloads\SDL2-2.24.1\lib\x64;D:\Users\Milton\Downloads\SDL2_image-2.6.2\lib\x64;$(LibraryPath)</LibraryPath>
     <IncludePath>D:\Users\Milton\Downloads\SDL2_image-2.6.2\include;D:\Users\Milton\Downloads\SDL2-2.24.1\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>D:\Users\Milton\Downloads\SDL2-2.24.1\include;D:\Users\Milton\Downloads\SDL2_image-2.6.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Users\Milton\Downloads\SDL2-2.24.1\lib\x64;D:\Users\Milton\Downloads\SDL2_image-2.6.2\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -108,6 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +134,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -148,7 +154,14 @@
     <ClInclude Include="MoveEntities.h" />
     <ClInclude Include="RenderEntities.h" />
     <ClInclude Include="RenderWindow.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Tiles.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ChickenGame.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\gfx\game_icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

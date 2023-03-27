@@ -43,10 +43,10 @@ private:
 	void renderUIElements();
 	void changePlayerTextures();
 	void renderChickenWings();
-	int displayMainMenu();
 	bool pressedKey(const SDL_Keycode);
 	bool playersAreClose();
 	bool playerOneByDoor();
+	int displayMainMenu();
 
 	// Reads presses from the keyboard.
 	const Uint8* keystates;

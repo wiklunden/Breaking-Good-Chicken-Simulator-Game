@@ -9,6 +9,8 @@ void Game::run() {
 		std::cout << "Could not initialize image.\nError: " << SDL_GetError() << "\n";
 	}
 
+	SDL_SetWindowIcon(window.getWindow(), IMG_Load("resources/gfx/game_icon.ico"));
+
 	if (displayMainMenu() == 0) {
 		gameIsRunning = true;
 
@@ -30,8 +32,6 @@ void Game::stop() {
 }
 
 int Game::displayMainMenu() {
-	SDL_SetWindowIcon(window.getWindow(), IMG_Load("resources/gfx/game_icon.png"));
-
 	Entity mainMenu(Position(0, 0), "resources/gfx/mainmenu.png", 1280, 720, 1);
 	bool displayMenu = true;
 	while (displayMenu) {
