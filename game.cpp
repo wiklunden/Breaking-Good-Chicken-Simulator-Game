@@ -39,7 +39,7 @@ int main(int argc, char* args[]) {
 		std::cout << "Could not initialize image.\nError: " << SDL_GetError() << "\n";
 	}
 
-	// Dimensions.
+	// Window dimensions.
 	const int WINDOW_WIDTH = 1280;
 	const int WINDOW_HEIGHT = 720;
 	const char* TITLE = "Breaking Good v1.0.0";
