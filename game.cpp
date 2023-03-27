@@ -12,7 +12,7 @@
 #include "MoveEntities.h"
 #include "RenderEntities.h"
 
-SDL_Event event;
+SDL_Event event; // Event
 
 // Reads key input from user.
 bool pressedKey(const SDL_Keycode button) {
