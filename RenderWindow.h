@@ -18,13 +18,10 @@ public:
 	static void render(Entity&);
 	static void render(std::vector<Entity*>&);
 	void display();
-	void displayMenu();
-	bool terminate();
 
 private:
 	SDL_Window* window;
 	// OpenGL renderer for displaying things.
 	static SDL_Renderer* renderer;
-	bool quitGame = false;
 };
 

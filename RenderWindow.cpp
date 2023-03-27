@@ -76,37 +76,3 @@ void RenderWindow::render(std::vector<Entity*>& vec) {
 void RenderWindow::display() {
 	SDL_RenderPresent(renderer);
 }
-
-void RenderWindow::displayMenu() {
-	bool showMenu = true;
-	SDL_Event event;
-
-	Entity mainMenu(Position(0, 0), "resources/gfx/mainmenu.png", 1280, 720, 1);
-	while (showMenu) {
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_e) {
-					SDL_DestroyTexture(mainMenu.getTexture());
-					quitGame = false;
-					showMenu = false;
-				}
-				if (event.key.keysym.sym == SDLK_ESCAPE) {
-					quitGame = true;
-					showMenu = false;
-
-					// Destroys window.
-					cleanUp();
-
-					// Quits SDL.
-					SDL_Quit();
-				}
-			}
-		}
-		render(mainMenu);
-		display();
-	}
-}
-
-bool RenderWindow::terminate() {
-	return quitGame;
-}

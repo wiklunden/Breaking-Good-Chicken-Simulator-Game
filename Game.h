@@ -2,33 +2,63 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_filesystem.h>
 
 #include "RenderWindow.h"
+#include "Entity.h"
+#include "Math.h"
 #include "Tiles.h"
+#include "MoveEntities.h"
+#include "RenderEntities.h"
 
 class Game {
 public:
 	Game() :
+		WINDOW_WIDTH(1280),
+		WINDOW_HEIGHT(720),
+		GAME_TITLE("Breaking Good v.1.0.0"),
 		window(GAME_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT),
 		floor("resources/textures/ground.png"),
 		gameIsRunning(false),
+		keystates(SDL_GetKeyboardState(nullptr)),
 		clicks(0),
+		moveSpeed(1.0f),
+		playerDistanceX(0),
+		playerDistanceY(0),
 		SCREEN_CENTER_X(126),
 		SCREEN_CENTER_Y(70)
 	{}
-	int run();
+	void run();
 private:
+	void stop();
 	void handleEvents();
 	void update();
-	void render();
 	void initiateEntities();
+	void getPlayerOneKeyInputs();
+	void getPlayerTwoKeyInputs();
+	void renderUIElements();
+	void changePlayerTextures();
+	void renderChickenWings();
+	int displayMainMenu();
+	bool pressedKey(const SDL_Keycode);
+	bool playersAreClose();
+	bool playerOneByDoor();
 
+	// Reads presses from the keyboard.
+	const Uint8* keystates;
+
+	const int WINDOW_WIDTH, WINDOW_HEIGHT;
+	const char* GAME_TITLE;
 	RenderWindow window;
+
 	Tiles floor;
-	Position wingOrigin{ 600, 0 };
-	Position wingPosition = wingOrigin;
+	bool gameIsRunning;
+
+	// Container class responsible for manipulating the position of all added entities.
+	MoveEntities entitiesToMove;
 
 	Entity playerOne,
 		playerTwo,
@@ -42,22 +72,17 @@ private:
 		cppIcon,
 		wing;
 
-	std::vector<Entity*> players, playerTwoEntites;
+	Position wingOrigin{ 600, 0 };
+	Position wingPosition = wingOrigin;
+
+	std::vector<Entity*> players, playerTwoEntities;
 	std::vector<Entity> wingCounter;
 
-	SDL_Event event;
+	SDL_Event event{};
 
-	bool gameIsRunning;
-	float playerDistanceX = 0, playerDistanceY = 0;
-	float moveSpeed = 1.0f;
+	float playerDistanceX, playerDistanceY, moveSpeed;
 	int clicks;
 
-	const int WINDOW_WIDTH = 1280;
-	const int WINDOW_HEIGHT = 720;
-	const char* GAME_TITLE = "Breaking Good v.1.0.0";
-	const int PLAYER_DISTANCE = 40;
-	const int MIN_Y = 70, MAX_Y = 150;
-	const int MIN_CLICKS = 0, MAX_CLICKS = 5;
 	const int SCREEN_CENTER_X, SCREEN_CENTER_Y;
 	const char* balanceTextures[6]{
 		"resources/textures/balance/10.png",
