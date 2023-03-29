@@ -53,8 +53,8 @@ void RenderWindow::render(Entity& p_entity) {
 
 	dst.x = p_entity.getPos().x * p_entity.getScaler();
 	dst.y = p_entity.getPos().y * p_entity.getScaler();
-	dst.w = p_entity.getCurrentFrame().w * p_entity.getScaler();
-	dst.h = p_entity.getCurrentFrame().h * p_entity.getScaler();
+	dst.w = src.w * p_entity.getScaler();
+	dst.h = src.h * p_entity.getScaler();
 
 	SDL_RenderCopy(renderer, p_entity.getTexture(), &src, &dst);
 }
@@ -66,8 +66,8 @@ void RenderWindow::render(std::vector<Entity*>& vec) {
 
 		dst.x = it->getPos().x * it->getScaler();
 		dst.y = it->getPos().y * it->getScaler();
-		dst.w = it->getCurrentFrame().w * it->getScaler();
-		dst.h = it->getCurrentFrame().h * it->getScaler();
+		dst.w = src.w * it->getScaler();
+		dst.h = src.h * it->getScaler();
 
 		SDL_RenderCopy(renderer, it->getTexture(), &src, &dst);
 	}

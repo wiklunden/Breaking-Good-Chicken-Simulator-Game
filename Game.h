@@ -29,7 +29,9 @@ public:
 		playerDistanceX(0),
 		playerDistanceY(0),
 		SCREEN_CENTER_X(126),
-		SCREEN_CENTER_Y(70)
+		SCREEN_CENTER_Y(70),
+		BOTTOM_BOUNDARY(70),
+		TOP_BOUNDARY(150)
 	{}
 	void run();
 private:
@@ -52,6 +54,7 @@ private:
 	const Uint8* keystates;
 
 	const int WINDOW_WIDTH, WINDOW_HEIGHT;
+	const int TOP_BOUNDARY, BOTTOM_BOUNDARY;
 	const char* GAME_TITLE;
 	RenderWindow window;
 

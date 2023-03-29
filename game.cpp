@@ -56,7 +56,8 @@ int Game::displayMainMenu() {
 }
 
 void Game::initiateEntities() {
-	playerOne = Entity(Position(SCREEN_CENTER_X, SCREEN_CENTER_Y), "resources/textures/gus_front.png", 64, 64);
+	// FIX SPRITE SHEET DISPLACEMENT ON MOVE.
+	playerOne = Entity(Position(SCREEN_CENTER_X, SCREEN_CENTER_Y), "resources/textures/gus_sheet.png", 64, 64);
 	playerTwo = Entity(Position(playerOne.getX() - 40, playerOne.getY() + 10), "resources/textures/walt_front.png", 64, 64);
 	dialogueBox = Entity(Position(playerTwo.getX() + 24, playerTwo.getY() - 40), "resources/textures/dialogue.png", 67, 36);
 	chickenPopUp = Entity(Position(SCREEN_CENTER_X, SCREEN_CENTER_Y + 60), "resources/textures/chicken.png", 64, 36);
@@ -230,8 +231,6 @@ bool Game::pressedKey(const SDL_Keycode button) {
 }
 
 void Game::getPlayerOneKeyInputs() {
-	const int MIN_Y = 70, MAX_Y = 150;
-
 	entitiesToMove.clear();
 
 	//Movement for player one.
@@ -239,7 +238,7 @@ void Game::getPlayerOneKeyInputs() {
 		playerOne.setTexture("resources/textures/gus_back.png");
 
 		// Move playerOne.
-		(playerOne.getY() == MIN_Y)
+		(playerOne.getY() == BOTTOM_BOUNDARY)
 			? playerOne.move(0.0f, 0.0f)
 			: playerOne.move(0.0f, -moveSpeed);
 	}
@@ -261,7 +260,7 @@ void Game::getPlayerOneKeyInputs() {
 		playerOne.setTexture("resources/textures/gus_front.png");
 
 		// Move playerOne.
-		(playerOne.getY() == MAX_Y)
+		(playerOne.getY() == TOP_BOUNDARY)
 			? playerOne.move(0.0f, 0.0f)
 			: playerOne.move(0.0f, moveSpeed);
 	}
@@ -282,8 +281,6 @@ void Game::getPlayerOneKeyInputs() {
 }
 
 void Game::getPlayerTwoKeyInputs() {
-	const int MIN_Y = 70, MAX_Y = 150;
-
 	entitiesToMove.clear();
 
 	// Movement for player two.
@@ -291,7 +288,7 @@ void Game::getPlayerTwoKeyInputs() {
 		playerTwo.setTexture("resources/textures/walt_back.png");
 
 		// Move playerTwo.
-		(playerTwo.getY() == MIN_Y)
+		(playerTwo.getY() == BOTTOM_BOUNDARY)
 			? entitiesToMove.move(playerTwoEntities, 0.0f, 0.0f)
 			: entitiesToMove.move(playerTwoEntities, 0.0f, -moveSpeed);
 	}
@@ -305,7 +302,7 @@ void Game::getPlayerTwoKeyInputs() {
 		playerTwo.setTexture("resources/textures/walt_front.png");
 
 		// Move playerTwo.
-		(playerTwo.getY() == MAX_Y)
+		(playerTwo.getY() == TOP_BOUNDARY)
 			? entitiesToMove.move(playerTwoEntities, 0.0f, 0.0f)
 			: entitiesToMove.move(playerTwoEntities, 0.0f, moveSpeed);
 	}

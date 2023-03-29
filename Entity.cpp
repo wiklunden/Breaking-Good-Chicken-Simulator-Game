@@ -2,18 +2,15 @@
 #include "RenderWindow.h"
 
 Entity::Entity()
-	: pos(0, 0), texture(nullptr),
-	scaler(1.0f), currentFrame{ 0, 0, 0, 0 } {}
+	: pos(0, 0), texture(nullptr), scaler(1.0f), currentFrame{ 0, 0, 0, 0 } {}
 
 Entity::Entity(Position p_pos, const char* texturePath, int p_w, int p_h)
-	: pos(p_pos), scaler(4.0f),
-	currentFrame{ 0, 0, p_w, p_h } {
+	: pos(p_pos), scaler(4.0f),	currentFrame{ 0, 0, p_w, p_h } {
 	setTexture(texturePath);
 }
 
 Entity::Entity(Position p_pos, const char* texturePath, int p_w, int p_h, float p_scaler)
-	: pos(p_pos), scaler(p_scaler),
-	currentFrame{ 0, 0, p_w, p_h } {
+	: pos(p_pos), scaler(p_scaler), currentFrame{ 0, 0, p_w, p_h } {
 	setTexture(texturePath);
 }
 
