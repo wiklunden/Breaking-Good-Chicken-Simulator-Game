@@ -1,6 +1,6 @@
 /*
 	Name:			Milton Wiklund.
-	Description:	8-bit-like game featuring players from the Netflix show Breaking Bad.
+	Description:	8-bit-like game featuring characters from the Netflix show Breaking Bad.
 					This game is not copyrighted nor generating revenue in any form.
 					This game was created as a final project for a course called 'Programming methodology' (C++),
 					under the program 'Datateknik' at Mid Sweden University.
